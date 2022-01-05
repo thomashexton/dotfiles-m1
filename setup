@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# if any command in script gives an exit status >0 it'll exit immediately
+set -e
+
+echo "Settin' up..."
+
+# asks for the administrator password upfront
+# caches the password for 15mins ...?
+sudo -v
+
+echo "Installing Homebrew"
+# checks which hardware the script has been called on
+case $(uname -m) in
+  "x86_64")
+    echo "Intel hardware detected."
+    if [[ -f "usr/local/bin/brew" ]]; then
+      brew update
+    else
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+  ;;
+  "arm64")
+    echo "Apple Silicon hardware detected."
+    # first, install arm64 version
+    if [[ -f "usr/opt/homebrew/bin/brew" ]]; then
+      brew update
+    else
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    # second, install x86 version to support packages without Apple Silicon variant
+    if [[ -f "/usr/local/bin/brew" ]]; then
+      arch -x86_64 /usr/local/bin/brew update
+    else
+      # TODO: check if Rosetta is already installed
+      softwareupdate --install-rosetta --agree-to-license
+      arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      # TODO: M1 Homebrew installs also require some additonal commands ... need to run them to add to $PATH
+    fi
+  ;;
+  *)
+    echo "Homebrew requires macOS using Intel CPU or Apple Silicon."
+    exit 1
+  ;;
+esac
