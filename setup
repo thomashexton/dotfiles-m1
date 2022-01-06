@@ -11,26 +11,30 @@ sudo -v
 
 echo "Installing Homebrew"
 # checks which hardware the script has been called on
+
+I_INSTALL=/usr/local/bin/brew
+A_INSTALL=/usr/opt/homebrew/bin/brew
+
 case $(uname -m) in
   "x86_64")
     echo "Intel hardware detected."
-    if [[ -f "usr/local/bin/brew" ]]; then
-      brew update
+    if [[ -f "$I_INSTALL" ]]; then
+      echo "intel updated"
     else
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      echo "intel installed"
     fi
   ;;
   "arm64")
     echo "Apple Silicon hardware detected."
     # first, install arm64 version
-    if [[ -f "usr/opt/homebrew/bin/brew" ]]; then
+    if [[ -f "$A_INSTALL" ]]; then
       brew update
     else
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
     # second, install x86 version to support packages without Apple Silicon variant
-    if [[ -f "/usr/local/bin/brew" ]]; then
-      arch -x86_64 /usr/local/bin/brew update
+    if [[ -f "$I_INSTALL" ]]; then
+      arch -x86_64 $I_INSTALL update
     else
       # TODO: check if Rosetta is already installed
       softwareupdate --install-rosetta --agree-to-license
@@ -43,3 +47,8 @@ case $(uname -m) in
     exit 1
   ;;
 esac
+
+FILE=/usr/local/bin/brew
+if test -f "$FILE"; then
+    echo "$FILE exists."
+fi
