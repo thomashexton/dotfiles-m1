@@ -87,10 +87,11 @@ else
   cd $WORKDIR
 fi
 
+# Uncomment this if you don't backup your secrets using Mackup
 # Link custom .zsh files to Oh My Zsh custom folder
-if [[ ! -f custom/secret.zsh ]]; then
-  touch custom/secret.zsh
-fi
+# if [[ ! -f custom/secret.zsh ]]; then
+#   touch custom/secret.zsh
+# fi
 for file in custom/*; do
   echo "Creating symbolic linking for $file"
   ln -sf $HOME/$REPO_NAME/$file $HOME/.oh-my-zsh/$file
