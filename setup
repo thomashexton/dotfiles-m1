@@ -5,50 +5,137 @@ set -e
 
 echo "Settin' up..."
 
+WORKDIR=$(pwd)
+REPO_NAME="dotfiles-m1"
+
 # asks for the administrator password upfront
-# caches the password for 15mins ...?
+# caches the password for 15 mins ...?
 sudo -v
 
 echo "Installing Homebrew"
 # checks which hardware the script has been called on
 
-I_INSTALL=/usr/local/bin/brew
-A_INSTALL=/usr/opt/homebrew/bin/brew
+I_INSTALL_LOC=/usr/local/bin/brew
+A_INSTALL_LOC=/opt/homebrew/bin/brew
 
 case $(uname -m) in
   "x86_64")
     echo "Intel hardware detected."
-    if [[ -f "$I_INSTALL" ]]; then
-      echo "intel updated"
+    if [[ ! -f "$I_INSTALL_LOC" ]]; then
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
-      echo "intel installed"
+      brew update
     fi
   ;;
+
   "arm64")
     echo "Apple Silicon hardware detected."
     # first, install arm64 version
-    if [[ -f "$A_INSTALL" ]]; then
-      brew update
-    else
+    if [[ ! -f "$A_INSTALL_LOC" ]]; then
+      echo "Installing arm64 Homebrew ..."
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    else
+      echo "arm64 Homebrew already installed, updating ..."
+      brew update
     fi
     # second, install x86 version to support packages without Apple Silicon variant
-    if [[ -f "$I_INSTALL" ]]; then
-      arch -x86_64 $I_INSTALL update
-    else
+    if [[ ! -f "$I_INSTALL_LOC" ]]; then
       # TODO: check if Rosetta is already installed
+      echo "Installing Rosetta 2 ..."
       softwareupdate --install-rosetta --agree-to-license
+      echo "Installing x86 Homebrew ..."
       arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      # TODO: M1 Homebrew installs also require some additonal commands ... need to run them to add to $PATH
+      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/thomashexton/.zprofile
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+      echo "x86 Homebrew also already installed, updating ..."
+      arch -x86_64 $I_INSTALL_LOC update
     fi
   ;;
+
   *)
     echo "Homebrew requires macOS using Intel CPU or Apple Silicon."
     exit 1
   ;;
 esac
 
-FILE=/usr/local/bin/brew
-if test -f "$FILE"; then
-    echo "$FILE exists."
+# Install packages and apps from Brewfile
+echo "Installing packages and apps with Homebrew..."
+brew bundle --file=dependencies/Brewfile --no-lock --no-upgrade
+
+# Install Oh My Zsh
+if [[ ! -d $HOME/.oh-my-zsh ]]; then
+  # Install Oh My Zsh
+  echo "Installing Oh My Zsh..."
+  RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+else
+  # Use the inbuilt mechanism to update Oh My Zsh
+  echo "Oh My Zsh already installed, updating..."
+  cd $HOME/.oh-my-zsh
+  git pull >/dev/null 2>&1
+  cd $WORKDIR
 fi
+
+# Install Powerlevel10k zsh theme
+if [[ ! -d $HOME/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
+  echo "Installing Powerlevel10k zsh theme..."
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k
+else
+  echo "Powerlevel10k already installed, updating..."
+  cd $HOME/.oh-my-zsh/custom/themes/powerlevel10k
+  git pull >/dev/null 2>&1
+  cd $WORKDIR
+fi
+
+# Link custom .zsh files to Oh My Zsh custom folder
+if [[ ! -f custom/secret.zsh ]]; then
+  touch custom/secret.zsh
+fi
+for file in custom/*; do
+  echo "Creating symbolic linking for $file"
+  ln -sf $HOME/$REPO_NAME/$file $HOME/.oh-my-zsh/$file
+done
+
+# Link ssh config
+echo "Linking ssh config..."
+mkdir -p $HOME/.ssh
+ln -sf $HOME/$REPO_NAME/ssh/config $HOME/.ssh/config
+
+# Link $HOME dotfiles
+echo "Linking files to home directory..."
+for file in sym-links/*; do
+  if [[ ! -d $file ]]; then
+    ln -sf $HOME/$REPO_NAME/$file $HOME/.${file#sym-links/}
+  else
+    echo "Ignoring directory $file"
+  fi
+done
+
+# Create this file to suppress error from z on first 'cd'
+if [[ ! -f $HOME/.z ]]; then
+    touch $HOME/.z
+fi
+
+# Install asdf version manager plugins
+for p in $(awk '{print $1}' < sym-links/tool-versions); do
+  if [[ ! -d $HOME/.asdf/plugins/$p ]]; then
+    echo "Adding asdf plugin $p..."
+    asdf plugin add $p
+  else
+    echo "asdf plugin $p already added, updating..."
+    asdf plugin update $p >/dev/null 2>&1
+  fi
+done
+
+# Restore configs with mackup
+echo "Linking mackup config..."
+if [[ ! -d $HOME/.mackup ]]; then
+    mkdir $HOME/.mackup
+fi
+for f in mackup/*; do
+    ln -sf $WORKDIR/$f $HOME/.$f
+done
+echo "Restoring files with mackup..."
+mackup restore -f
+
+echo "Setup complete, quit terminal and open iTerm to continue..."

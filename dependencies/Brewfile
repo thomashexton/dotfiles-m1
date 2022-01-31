@@ -1,0 +1,72 @@
+tap "homebrew/cask-fonts"
+
+# CLI
+# Extendable version manager with support for Ruby, Node.js, Erlang & more
+brew "asdf"
+# Official Amazon AWS command-line interface
+brew "awscli"
+# Distributed revision control system
+brew "git"
+# Add GitHub support to git on the command-line
+brew "hub"
+# Production Grade K8s Installation, Upgrades, and Management
+brew "kops"
+brew "kubectl"
+# Tool that can switch between kubectl contexts easily and create aliases
+brew "kubectx"
+# Not sure tbh
+brew "kubernetes-cli"
+# Keep your Mac's application settings in sync
+brew "mackup"
+# Mac App Store command-line interface
+brew "mas"
+# Open source relational database management system
+brew "mysql-client@5.7"
+# Tracks most-used directories to make cd smarter
+brew "z"
+
+# Casks (GUI)
+cask "authy"
+cask "battle-net"
+cask "brave-browser"
+cask "docker"
+# cask "font-fira-code-nerd-font"
+# cask "font-jetbrains-mono"
+# cask "google-chrome"
+cask "google-cloud-sdk"
+# cask "gpg-suite-no-mail"
+cask "insomnia"
+cask "iterm2"
+cask "logitech-camera-settings"
+cask "logitech-options"
+cask "lunar"
+cask "signal"
+cask "slack"
+cask "sonos"
+cask "spotify"
+cask "steelseries-exactmouse-tool"
+cask "tableplus"
+cask "visual-studio-code"
+
+# Mac App Store Apps
+mas "1Password 7", id: 1333542190
+# mas "Affinity Designer", id: 824171161
+# mas "Affinity Photo", id: 824183456
+# mas "Affinity Publisher", id: 881418622
+# mas "Amphetamine", id: 937984704
+# mas "Compressor", id: 424390742
+# mas "Disk Speed Test", id: 425264550
+mas "Divvy", id: 413857545
+# mas "Final Cut Pro", id: 424389933
+mas "GoodTask", id: 1143437985
+# mas "Keynote", id: 409183694
+# mas "Monit", id: 1014850245
+# mas "Motion", id: 434290957
+mas "Newton", id: 1059655371
+# mas "Numbers", id: 409203825
+# mas "Pages", id: 409201541
+mas "Parcel", id: 639968404
+mas "Session", id: 1521432881
+mas "ToothFairy", id: 1191449274
+mas "WireGuard", id: 1451685025
+# mas "Xcode", id: 497799835
