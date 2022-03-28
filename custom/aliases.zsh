@@ -35,10 +35,6 @@ alias bsq="bundle exec sidekiq -C config/containers/sidekiq/sidekiq.yml"
 # iCloud dir
 alias ic='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs'
 
-# Postgres
-alias pg_start="launchctl load ~/Library/LaunchAgents"
-alias pg_stop="launchctl unload ~/Library/LaunchAgents"
-
 # Edit hosts file
 alias hosts='sudo $EDITOR /etc/hosts'
 

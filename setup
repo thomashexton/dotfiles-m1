@@ -87,6 +87,19 @@ else
   cd $WORKDIR
 fi
 
+# Install additional zsh plugins not included with Oh My Zsh
+for r in zsh-autosuggestions zsh-syntax-highlighting; do
+  if [[ ! -d $HOME/.oh-my-zsh/custom/plugins/$r ]]; then
+    echo "Installing $r..."
+    git clone --depth=1 https://github.com/zsh-users/$r $HOME/.oh-my-zsh/custom/plugins/$r
+  else
+    echo "$r already installed, updating..."
+    cd $HOME/.oh-my-zsh/custom/plugins/$r
+    git pull
+    cd $HOME/dotfiles
+  fi
+done
+
 # Uncomment this if you don't backup your secrets using Mackup
 # Link custom .zsh files to Oh My Zsh custom folder
 # if [[ ! -f custom/secret.zsh ]]; then
