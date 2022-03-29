@@ -13,11 +13,11 @@ REPO_NAME="dotfiles-m1"
 sudo -v
 
 echo "Installing Homebrew"
-# checks which hardware the script has been called on
 
 I_INSTALL_LOC=/usr/local/bin/brew
 A_INSTALL_LOC=/opt/homebrew/bin/brew
 
+# checks which hardware the script has been called on
 case $(uname -m) in
   "x86_64")
     echo "Intel hardware detected."

@@ -4,9 +4,6 @@
 # export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 # export PATH="/usr/local/opt/v8@3.15/bin:$PATH"
 
-export PATH="/opt/homebrew/opt/proj@7/bin:$PATH"
-export PATH="/usr/local/opt/v8@3.15/bin:$PATH"
-
 # # Set your default editor(s)
 export EDITOR='nvim'
 export VISUAL_EDITOR='code'
