@@ -8,6 +8,8 @@ brew "asdf"
 brew "awscli"
 # Distributed revision control system
 brew "git"
+# Make git flow easier
+brew "git-flow-avh"
 # Add GitHub support to git on the command-line
 brew "hub"
 # Production Grade K8s Installation, Upgrades, and Management
@@ -17,6 +19,8 @@ brew "hub"
 # brew "kubectx"
 # Not sure tbh
 # brew "kubernetes-cli"
+# mimemagic dependency
+brew "shared-mime-info"
 # Keep your Mac's application settings in sync
 brew "mackup"
 # Mac App Store command-line interface
@@ -41,9 +45,10 @@ cask "docker"
 # cask "gpg-suite-no-mail"
 cask "insomnia"
 cask "iterm2"
-cask "logitech-camera-settings"
-cask "logitech-options"
+# cask "logitech-camera-settings"
+# cask "logitech-options"
 cask "lunar"
+cask "pgadmin4"
 cask "signal"
 cask "slack"
 cask "sonos"

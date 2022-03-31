@@ -53,3 +53,6 @@ alias wx='curl v2.wttr.in'
 
 # Copy public ip to the clipboard
 alias pubip='curl -s ipv4.icanhazip.com | tee >(pbcopy)'
+
+# Copy my public SSH rsa to clipboard
+alias pubssh='pbcopy < ~/.ssh/id_rsa.pub'
