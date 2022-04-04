@@ -10,7 +10,6 @@ alias dbrollback="bundle exec rake db:rollback"
 alias db:reset="bundle exec rake db:reset"
 alias db:reset:test="bundle exec rake db:reset RAILS_ENV=test"
 alias rspec="bundle exec rspec"
-alias gqlschema="bundle exec rake graphql:dump_schema"
 
 # Git
 alias gcfo="git config --list --show-origin"
