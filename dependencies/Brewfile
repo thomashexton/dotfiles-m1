@@ -1,5 +1,6 @@
 tap "homebrew/cask-fonts"
 tap "homebrew/cask-drivers"
+tap "homebrew/services"
 
 # CLI
 # Extendable version manager with support for Ruby, Node.js, Erlang & more
@@ -25,6 +26,8 @@ brew "shared-mime-info"
 brew "mackup"
 # Mac App Store command-line interface
 brew "mas"
+# NeoVim, get on it
+brew "neovim"
 # Postgres DB
 brew "postgres"
 # Open source relational database management system
