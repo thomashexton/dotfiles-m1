@@ -34,7 +34,8 @@ brew "redis"
 brew "z"
 
 # Casks (GUI)
-cask "authy"
+# cask "1password" # mas doesn't have v8 yet
+# cask "authy"
 cask "battle-net"
 cask "brave-browser"
 cask "docker"
@@ -47,25 +48,26 @@ cask "insomnia"
 cask "iterm2"
 # cask "logitech-camera-settings"
 # cask "logitech-options"
+cask "linearmouse"
 cask "lunar"
-cask "pgadmin4"
+# cask "pgadmin4"
 cask "signal"
 cask "slack"
 cask "sonos"
 cask "spotify"
-cask "steelseries-exactmouse-tool"
+# cask "steelseries-exactmouse-tool"
 cask "tableplus"
 cask "visual-studio-code"
 
 # Mac App Store Apps
-# mas "1Password 7", id: 1333542190 # **
+# mas "1Password 7", id: 1333542190 #  **
 # mas "Affinity Designer", id: 824171161
 # mas "Affinity Photo", id: 824183456
 # mas "Affinity Publisher", id: 881418622
 # mas "Amphetamine", id: 937984704
 # mas "Compressor", id: 424390742
 # mas "Disk Speed Test", id: 425264550
-# mas "Divvy", id: 413857545 # **
+mas "Divvy", id: 413857545 # **
 # mas "Final Cut Pro", id: 424389933
 # mas "GoodTask", id: 1143437985
 # mas "Keynote", id: 409183694
