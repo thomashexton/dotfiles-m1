@@ -10,13 +10,14 @@ alias dbrollback="bundle exec rake db:rollback"
 alias db:reset="bundle exec rake db:reset"
 alias db:reset:test="bundle exec rake db:reset RAILS_ENV=test"
 alias rspec="bundle exec rspec"
+alias wpds="./bin/webpack-dev-server"
 
 # Git
 alias gcfo="git config --list --show-origin"
 alias gfd="git diff --name-status master.."
 
 # Nicely formatted diff for announcements
-alias deploydiff="git log production..master --pretty=format:'%<(23)%an    %s' --abbrev-commit"
+alias deploydiff="git log main..staging --pretty=format:'%<(23)%an    %s' --abbrev-commit"
 
 # iCloud dir
 alias ic='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs'
