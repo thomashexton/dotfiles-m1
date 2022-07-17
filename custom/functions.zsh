@@ -57,5 +57,5 @@ cnra ()
 
 # https://www.bootrails.com/blog/how-to-create-tons-rails-applications/
 cnra7mp() {
-  cnra myapp 7.0.0 --minimal -d=postgresql
+  cnra myapp 7.0.0 --minimal --database=postgresql --skip-test
 }
